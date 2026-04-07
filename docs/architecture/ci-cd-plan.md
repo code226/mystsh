@@ -1,42 +1,42 @@
-# CI/CD Deployment Architecture
+# CI/CD Deployment Architecture (Vercel + Supabase)
 
-This document details the automated pipeline for the mystsh platform, ensuring high availability, security, and rapid delivery.
+This document details the automated pipeline for the mystsh platform, optimized for a **mobile-first** experience using serverless and real-time technologies.
 
 ## 1. Pipeline Overview
 
-We utilize **GitHub Actions** as our primary CI provider, orchestrated via **Turborepo** for optimized task execution.
+We utilize a **Serverless + Mobile** pipeline that minimizes operational overhead and infrastructure costs.
 
 ### Environment Strategy
-- **Development (Ephemeral):** Created for every PR to test isolated features.
-- **Staging (Branch: `main`):** Shared environment for UAT and final testing.
-- **Production (Tagged Releases):** Stable environment serving end-users.
+- **Development (GitHub PRs):** Ephemeral Vercel Preview deployments for the Web Dashboard and Edge Functions.
+- **Production (main branch):** Stable environment for production users.
 
-## 2. Security Gates & Compliance
+## 2. Platform Hosting (Free-Tier Optimized)
 
-Security is integrated into every step of the pipeline.
+| Component | Platform | Role |
+| :--- | :--- | :--- |
+| **Mobile App UI** | **Expo (EAS)** | Building and distributing iOS/Android binaries. |
+| **Web Dashboard** | **Vercel** | Hosting the Parent Management interface (Next.js). |
+| **API & Edge Functions**| **Supabase / Vercel** | Executing business logic and bank API integrations. |
+| **Real-time Database** | **Supabase** | Managed PostgreSQL with Real-time synchronization. |
 
-### Static Analysis (SAST)
-- **CodeQL:** Runs on every push to identify security vulnerabilities.
-- **Snyk:** Scans all `package.json` dependencies for known vulnerabilities.
+## 3. Deployment Workflows
 
-### Secret Management
-- **Provider:** AWS Secrets Manager / HashiCorp Vault.
-- **Rule:** No secrets or sensitive keys are ever stored in `.env` files or hardcoded. Deployment keys are injected at runtime via GitHub Action Secrets.
+### Mobile App (React Native/Expo)
+- **EAS Build:** Builds are triggered for production releases.
+- **EAS Update:** Allows for "Over-the-Air" (OTA) updates for quick UI fixes without full App Store review.
+- **OTA Strategy:** We use OTA updates for all non-native changes to maintain agility.
 
-### PCI-DSS Automated Audits
-- Automated scripts verify that no PAN (Primary Account Number) data is logged or stored in plaintext before any deployment to Production.
+### Backend (Vercel Edge & Supabase)
+- **Automatic Deployment:** Pushing to the `main` branch automatically deploys Edge Functions to **Vercel** and **Supabase**.
+- **Database Migrations:** Managed via the Supabase CLI to ensure schema consistency between environments.
 
-## 3. Continuous Deployment (CD) Workflows
+## 4. Quality & Security Gates
 
-### Backend (AWS ECS)
-- **Strategy:** Blue/Green Deployments.
-- **Flow:** New containers are spun up and verified via health checks before traffic is shifted from the "Blue" (old) to "Green" (new) cluster.
+- **Linting & Formatting:** Turborepo manages linting across the mobile and web projects.
+- **SAST Scanning:** CodeQL and Snyk for dependency and code vulnerability scanning on every PR.
+- **Secret Management:** Sensitive keys (Wise API, Plaid Secrets) are managed via Vercel Environment Variables and Supabase Vault.
 
-### Mobile Applications (EAS)
-- **EAS Build:** Builds signed binaries for iOS (.ipa) and Android (.aab).
-- **EAS Submit:** Automatically uploads builds to TestFlight and Google Play Console Internal tracks once CI passes.
-
-## 4. Rollback & Monitoring
-
-- **Auto-Rollback:** If AWS CloudWatch detects a 5% increase in error rates post-deployment, the ECS service automatically reverts to the previous stable task definition.
-- **Health Checks:** `/health` endpoints are monitored every 30 seconds across all services.
+## 5. Monitoring & Performance
+- **Vercel Analytics:** Real-time monitoring of Web Dashboard performance.
+- **Supabase Logs:** Monitoring Edge Function execution and database health.
+- **Expo Sentry:** Integrated for real-time error tracking on mobile devices.

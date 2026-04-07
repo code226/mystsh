@@ -1,20 +1,20 @@
-# mystsh Mock Screenshots & Wireframes
+# mystsh Mock Screenshots & Wireframes (Tracker Model)
 
-This document provides visual representations of the core app screens as defined in the system architecture and [User Journeys](../user-journey.md).
+This document provides visual representations of the core screens for the mystsh Stash Tracker.
 
 ---
 
 ## 1. Teen Dashboard (Home Screen)
-**Goal:** High energy, modern, gamified. Shows balance, card, and recent transactions.
+**Goal:** High-energy, Dark Mode view of current "Stash" and spending habits.
 
 ```mermaid
 graph TD
-    A[Header: Hello, Alex 👋]
-    B[Balance: $125.50]
-    C[Virtual Card: Tap to Pay]
-    D[Button: Add to Apple Wallet]
-    E[List: Recent Transactions]
-    F[Bottom Nav: Home | Quests | Goals]
+    A[Header: Hello, Alex 👋 | 💎 1,250 pts]
+    B[Budget Meter: [======--] $125/$200 - ELEC BLUE]
+    C[Section: Activity Feed]
+    D[Activity: Starbucks - $5.45 | Budget Streak! +5 pts]
+    E[Activity: Steam - $12.99]
+    F[Bottom Nav: Home | Quests | Goals | Rewards]
 
     A --> B --> C --> D --> E --> F
 ```
@@ -22,158 +22,82 @@ graph TD
 ### High-Fidelity ASCII Mock
 ```text
 ┌──────────────────────────────────────────────────────────┐
-│ 10:41                                              📶 🔋 │
+│ 10:41                                  [ 💎 1,250⭐]  │
 ├──────────────────────────────────────────────────────────┤
 │  Hello, Alex 👋                                   [User] │
 │                                                          │
-│  Current Balance                                         │
-│  $125.50                                      (NEON GRN) │
+│  Weekly Budget Status                                    │
+│  [██████████████░░░░] $125.50 / $200      (ELEC BLUE)  │
 │                                                          │
-│  ┌────────────────────────────────────────────────────┐  │
-│  │ mystsh                                [V-CARD CHIP]│  │
-│  │                                                    │  │
-│  │ **** **** **** 4291                                │  │
-│  │                                                    │  │
-│  │ EXP: 04/28                       [ VISA ] [TAP-PAY]│  │
-│  └────────────────────────────────────────────────────┘  │
+│  Latest Rewards                                          │
+│  "Budget Master" (+5 pts) for Starbucks purchase         │
 │                                                          │
-│  [ () Add to Apple Wallet ]           (PILL BUTTON)     │
-│                                                          │
-│  Recent Transactions                       [ See All ]   │
+│  Recent Activity                                         │
 │  ┌────────────────────────────────────────────────────┐  │
 │  │ (S) Starbucks                       -$5.45         │  │
 │  │ (🎮) Steam                         -$12.99         │  │
 │  │ (🛒) 7-Eleven                       -$2.10         │  │
 │  └────────────────────────────────────────────────────┘  │
+│                                                          │
+│  ┌────────────────────────────────────────────────────┐  │
+│  │ [🏠 Home]   [💎 Quests]   [🎯 Goals]   [🎁 Rewards] │  │
+│  └────────────────────────────────────────────────────┘  │
 └──────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 2. Parent: Linking Funding Source
-**Goal:** Securely connect Wise, Revolut, or Koho. (Journey 1.1)
+## 2. Parent Dashboard (Monitoring & Boosting)
+**Goal:** Trustworthy, simple view of teen spending and points.
 
 ```mermaid
 graph TD
-    A[Title: Connect Funding Source]
-    B[Selection: Wise | Revolut | Koho | Other]
-    C[Input: Secure Card Linking (Tokenization)]
-    D[Success: Source Linked ✅]
+    A[Header: Family Overview]
+    B[Teen Profile: Alex - $125.50 Balance]
+    C[Budget: On Track 🟢]
+    D[Button: Award Point Boost 🚀]
+    E[Feed: Alex spent $5.45 at Starbucks - 2m ago]
 
-    A --> B --> C --> D
+    A --> B --> C & D --> E
 ```
 
 ### High-Fidelity ASCII Mock
 ```text
 ┌──────────────────────────────────────────────────────────┐
-│ Connect Funding Source                                [X]│
+│ Family Overview                                   [Settings]
 ├──────────────────────────────────────────────────────────┤
-│  Choose your primary account:                            │
+│  Alex's Stash                                            │
+│  Balance: $125.50 (Synced via Wise)                      │
 │                                                          │
-│  ┌────────────────────────────────────────────────────┐  │
-│  │ [W] Wise                                      [>]  │
-│  ├────────────────────────────────────────────────────┤  │
-│  │ [R] Revolut                                   [>]  │
-│  ├────────────────────────────────────────────────────┤  │
-│  │ [K] Koho                                      [>]  │
-│  └────────────────────────────────────────────────────┘  │
+│  Budget Health                                           │
+│  [  ON TRACK 🟢  ]   Limit: $200.00 / week                │
 │                                                          │
-│  Secure Tokenization                                     │
-│  mystsh never stores your raw card details.              │
+│  Alex's Activity Feed                                     │
+│  • Spent $5.45 at Starbucks (2m ago)                     │
+│  • Earned 5 pts for 'Budget Master'                      │
 │                                                          │
-│  [        Link Card with Secure-Connect        ]         │
+│  [ 🚀 Award Manual Point Boost ]        (PURPLE BUTTON)   │
 └──────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 3. Parent: Guardrails & Category Controls
-**Goal:** Set limits and block specific spending categories. (Journey 1.2)
-
-```mermaid
-graph TD
-    A[Teen: Alex - Settings]
-    B[Input: Weekly Limit - $50]
-    C[Toggle: Category: Gaming - OFF]
-    D[Toggle: Category: Food - ON]
-    E[Toggle: Category: Entertainment - ON]
-
-    A --> B --> C & D & E
-```
-
-### High-Fidelity ASCII Mock
-```text
-┌──────────────────────────────────────────────────────────┐
-│ Alex's Spending Rules                             [Save] │
-├──────────────────────────────────────────────────────────┤
-│  Weekly Spending Limit                                   │
-│  [ $ 50.00 ]                                             │
-│                                                          │
-│  Category Permissions                                    │
-│  ┌────────────────────────────────────────────────────┐  │
-│  │ 🍔 Food & Dining                         [  ON 🟢 ] │  │
-│  ├────────────────────────────────────────────────────┤  │
-│  │ 🎮 Gaming & Software                     [ OFF ⚪ ] │  │
-│  ├────────────────────────────────────────────────────┤  │
-│  │ 🎬 Entertainment                         [  ON 🟢 ] │  │
-│  └────────────────────────────────────────────────────┘  │
-│                                                          │
-│  [ ❄️ FREEZE ALL SPENDING ]              (RED BUTTON)    │
-└──────────────────────────────────────────────────────────┘
-```
-
----
-
-## 4. The "Financial Handshake" (Request Flow)
-**Goal:** Teen requests funds; Parent approves. (Journey 3.1)
-
-### Teen View (Requesting)
-```text
-┌──────────────────────────────────────────────────────────┐
-│ Request Extra Funds                                   [X]│
-├──────────────────────────────────────────────────────────┤
-│  Amount Requested                                        │
-│  [ $ 15.00 ]                                             │
-│                                                          │
-│  Reason (Optional)                                       │
-│  [ For cinema tickets with friends         ]             │
-│                                                          │
-│  [       Send Request to Maria (Parent)        ]         │
-└──────────────────────────────────────────────────────────┘
-```
-
-### Parent View (Approving)
-```text
-┌──────────────────────────────────────────────────────────┐
-│ 🔔 Notification                                          │
-├──────────────────────────────────────────────────────────┤
-│  Alex is requesting $15.00                               │
-│  "For cinema tickets with friends"                       │
-│                                                          │
-│  ┌──────────────────────────┐  ┌──────────────────────┐  │
-│  │      [ X Deny ]          │  │     [ ✓ Approve ]    │  │
-│  └──────────────────────────┘  └──────────────────────┘  │
-└──────────────────────────────────────────────────────────┘
-```
-
----
-
-## 5. Literacy Quest Screen (Teen App)
-**Goal:** Educational and rewarding. (Journey 2.2)
+## 3. Literacy Quest Screen (Teen App)
+**Goal:** Educational, interactive modules with point rewards.
 
 ### High-Fidelity ASCII Mock
 ```text
 ┌──────────────────────────────────────────────────────────┐
 │ Quests & Rewards                                [ 1,250⭐]│
 ├──────────────────────────────────────────────────────────┤
-│  Current Quests                                          │
+│  Active Quests                                           │
 │                                                          │
 │  ┌─ Magic of Compounding ─────────────────────────────┐  │
 │  │ How your money grows over time.                     │  │
-│  │ [██████████████░░░░] 75%               (ELEC BLUE)  │  │
+│  │ [██████████████░░░░] 75%               (NEON GRN)   │  │
 │  └────────────────────────────────────────────────────┘  │
 │                                                          │
-│  Redeem Points                                           │
+│  Marketplace                                             │
 │  ┌──────────────────┐  ┌──────────────────┐              │
 │  │ $5 Amazon Card   │  │ +5% Savings Boost│              │
 │  │ 2,500 pts        │  │ 1,500 pts        │              │

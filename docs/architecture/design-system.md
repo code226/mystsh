@@ -1,53 +1,46 @@
-# Design System: mystsh `ui-kit`
+# Design System: mystsh `ui-kit` (Tracker Model)
 
-This document outlines the visual and interactive foundations of the mystsh platform, shared across all mobile and web applications via the `packages/ui-kit` monorepo package.
+This document outlines the visual and interactive foundations for the mystsh Stash Tracker platform.
 
 ## 1. Color Palette & Design Tokens
 
-We use a token-based system to ensure consistency and facilitate future theme updates.
+We use a high-energy "Dark Mode" aesthetic to appeal to digital-native teens while maintaining a professional feel for parents.
 
 ### Core Brand Colors
 | Token | Value | Usage |
 | :--- | :--- | :--- |
-| `token.color.brand.primary` | #39FF14 | Neon Green: Primary actions, success, balances. |
+| `token.color.brand.primary` | #39FF14 | Neon Green: Balances, points earned, "On Budget" states. |
 | `token.color.brand.secondary` | #4B0082 | Deep Purple: Branding, secondary surfaces. |
-| `token.color.brand.accent` | #7DF9FF | Electric Blue: Interactive highlights, progress. |
+| `token.color.brand.accent` | #7DF9FF | Electric Blue: Interactive highlights, budget progress. |
 
 ### UI Surfaces & Text
-| Token | Value | Usage |
-| :--- | :--- | :--- |
-| `token.color.bg.base` | #121212 | Main app background (Dark Mode). |
-| `token.color.bg.surface` | #1E1E1E | Cards, modals, and elevated surfaces. |
-| `token.color.text.primary` | #FFFFFF | Primary readability. |
-| `token.color.text.secondary` | #B3B3B3 | Supporting text, captions. |
+- **Main Background:** #121212 (`token.color.bg.base`)
+- **Surface (Cards):** #1E1E1E (`token.color.bg.surface`)
+- **Text Primary:** #FFFFFF (`token.color.text.primary`)
+- **Text Secondary:** #B3B3B3 (`token.color.text.secondary`)
 
-### Semantic States
-- **Error:** #FF3B30 (`token.color.state.error`)
-- **Warning:** #FFCC00 (`token.color.state.warning`)
+### Gamification States
+- **Streak Bonus:** Gold (#FFD700)
+- **Over Budget:** Coral (#FF7F50)
+- **Quest Completion:** Neon Green (#39FF14)
 
-## 2. Layout & Spacing
+## 2. Layout & Gamified Components
 
-### Spacing Scale (4px Base Grid)
-All margins, padding, and gaps must align with the base-4 scale:
-`4, 8, 12, 16, 24, 32, 48, 64, 80, 96`.
+### The "Budget Meter"
+- A semi-circular or horizontal progress bar using **Electric Blue**.
+- **Animation:** Fills from left to right as spending occurs.
+- **Visual Feedback:** Turns **Neon Green** if the user is under budget, and **Coral** if they exceed it.
 
-### Border Radii
-- **Small (4px):** Tooltips, small tags.
-- **Medium (12px):** Input fields, standard cards.
-- **Large (24px):** Large dashboard sections.
-- **Pill (999px):** Primary buttons.
+### The "Stash Point" Badge
+- A glowing pill-shaped badge displaying the current point balance.
+- **Animation:** "Pops" or scales up when points are added in real-time.
 
 ## 3. Typography
+- **Headings:** Inter (Bold) - Line height 1.2.
+- **Body:** Roboto (Regular/Medium) - Line height 1.5.
+- **Monospace (Balances):** SF Pro Mono - For clear, tabular figure alignment in transaction lists.
 
-| Style | Font Family | Weight | Line Height | Usage |
-| :--- | :--- | :--- | :--- | :--- |
-| **Heading 1** | Inter | Bold | 1.2 | Screen titles. |
-| **Body** | Roboto | Regular/Medium | 1.5 | General text. |
-| **Monospace** | SF Pro Mono | Medium | 1.0 | Transaction amounts, ID numbers. |
-
-## 4. Accessibility (A11y) Standards
-
-- **Contrast:** Minimum 4.5:1 ratio for all text.
-- **Touch Targets:** Interactive elements must be at least 44x44 points.
-- **Screen Readers:** All icons must include `accessibilityLabel`.
-- **Motion:** Use `useReducedMotion` hooks to disable animations for sensitive users.
+## 4. Accessibility & Feedback
+- **Haptics:** Strong haptic feedback for "Point Earned" events.
+- **Contrast:** Minimum 4.5:1 ratio for all text/background combinations.
+- **Reduced Motion:** Respect system settings to simplify animations for budget meters and point counters.
